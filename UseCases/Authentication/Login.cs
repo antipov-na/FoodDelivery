@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Identity.Authentication;
+using Domain.Identity.Authentication;
 using UseCases.Core;
 
 namespace UseCases.Authentication

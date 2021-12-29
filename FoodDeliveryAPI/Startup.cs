@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Identity.Authentication;
+using Domain.Identity.Authentication;
 using FoodDeliveryAPI.Middleware;
 using Infrastructure.Security;
 

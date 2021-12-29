@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FoodDelivery.Domain;
+using Domain.Entities;
+using Domain.Identity;
 using System.Collections.Generic;
 using UseCases.FoodItems;
 using UseCases.Images;

@@ -1,4 +1,4 @@
-﻿namespace FoodDelivery.Domain
+﻿namespace Domain.Entities
 {
     public interface IShopItem
     {

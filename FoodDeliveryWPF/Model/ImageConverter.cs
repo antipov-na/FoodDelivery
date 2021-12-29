@@ -1,4 +1,4 @@
-﻿using FoodDelivery.Domain;
+﻿using Domain.Entities;
 using System;
 using System.Globalization;
 using System.Windows.Data;

@@ -1,4 +1,4 @@
-﻿using Identity.Authentication;
+﻿using Domain.Identity.Authentication;
 
 namespace UseCases.Core.Authentication
 {

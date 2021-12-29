@@ -2,7 +2,8 @@
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
-using FoodDelivery.Domain;
+using Domain.Identity;
+using Domain.Entities;
 using System.Net.Http.Headers;
 
 namespace FoodDelivery.Persistence

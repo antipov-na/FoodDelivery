@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FoodDelivery.Domain;
+using Domain.Entities;
 using UseCases.Core;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Identity.Authentication;
+using Domain.Identity.Authentication;
 
 namespace FoodDelivery.Persistence
 {

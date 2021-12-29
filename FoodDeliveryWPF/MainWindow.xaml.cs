@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using FoodDelivery.Domain;
+using Domain.Entities;
+using Domain.Identity;
 using FoodDelivery.Persistence;
 using Microsoft.Win32;
 

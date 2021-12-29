@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FoodDelivery.Domain;
+using Domain.Entities;
 
 namespace UseCases.Core
 {

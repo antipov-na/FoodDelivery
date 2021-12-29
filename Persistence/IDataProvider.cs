@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using FoodDelivery.Domain;
+using Domain.Identity;
+using Domain.Entities;
 
 namespace FoodDelivery.Persistence
 {

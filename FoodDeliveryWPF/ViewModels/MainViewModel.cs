@@ -1,4 +1,5 @@
-﻿using FoodDelivery.Domain;
+﻿using Domain.Entities;
+using Domain.Identity;
 using FoodDelivery.Persistence;
 using FoodDeliveryWPF.Model;
 using Microsoft.AspNetCore.Http.Internal;

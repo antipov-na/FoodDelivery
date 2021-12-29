@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FoodDelivery.Domain
+namespace Domain.Entities
 {
     public class FoodItem : IShopItem
     {

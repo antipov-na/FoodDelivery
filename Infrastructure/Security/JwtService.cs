@@ -1,4 +1,4 @@
-﻿using Identity.Authentication;
+﻿using Domain.Identity.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System;

@@ -1,5 +1,5 @@
 ﻿using UseCases.Core;
-using FoodDelivery.Domain;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
