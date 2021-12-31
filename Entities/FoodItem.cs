@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class FoodItem : IShopItem
+    public class FoodItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
