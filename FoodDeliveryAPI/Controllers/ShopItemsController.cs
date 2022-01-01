@@ -8,6 +8,7 @@ using UseCases.Images;
 using UseCases.Core.Images;
 using System.Threading.Tasks;
 using UseCases.ItemTypes;
+using Domain.Entities.ValueObjects;
 
 namespace FoodDeliveryAPI.Controllers
 {
@@ -46,7 +47,7 @@ namespace FoodDeliveryAPI.Controllers
             {
                 Name = item.Dto.Name,
                 Description = item.Dto.Description,
-                Price = item.Dto.Price,
+                Price = Price.From(item.Dto.Price),
                 Type = type,
                 Image = new Image() { Id = result.Id, Url = result.Url }
             };
@@ -75,7 +76,7 @@ namespace FoodDeliveryAPI.Controllers
                 Image = newImage != null ? new Image() { Id = newImage.Id, Url = newImage.Url } : null,
                 Description = item.Dto.Description,
                 Type = type,
-                Price = item.Dto.Price,
+                Price = Price.From(item.Dto.Price),
             };
 
             return Ok(await Mediator.Send(new Edit.Command { FoodItem = _item }));

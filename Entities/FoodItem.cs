@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Domain.Entities.ValueObjects;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -9,6 +10,6 @@ namespace Domain.Entities
         public ItemType Type { get; set; }
         public string Description { get; set; }
         public Image Image { get; set; }
-        public decimal Price { get; set; }
+        public Price Price { get; set; }
     }
 }
