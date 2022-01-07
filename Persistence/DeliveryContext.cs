@@ -3,6 +3,7 @@ using Domain.Entities;
 using UseCases.Core;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Domain.Identity.Authentication;
+using Domain.Entities.ValueObjects;
 
 namespace FoodDelivery.Persistence
 {
@@ -20,6 +21,12 @@ namespace FoodDelivery.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder
+                .Entity<FoodItem>()
+                .Property(e => e.Price)
+                .HasConversion(
+                    v => v.Value,
+                    v => Price.From(v));
             base.OnModelCreating(builder);
         }
     }
