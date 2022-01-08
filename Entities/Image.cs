@@ -1,8 +1,9 @@
-﻿namespace Domain.Entities
+﻿using CSharpFunctionalExtensions;
+
+namespace Domain.Entities
 {
-    public class Image
+    public class Image : Entity<string>
     {
-        public string Id { get; set; }
         public string Url { get; set; }
     }
 }

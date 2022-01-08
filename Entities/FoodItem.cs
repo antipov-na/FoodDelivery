@@ -1,11 +1,11 @@
-﻿using Domain.Entities.ValueObjects;
+﻿using CSharpFunctionalExtensions;
+using Domain.Entities.ValueObjects;
 using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class FoodItem
+    public class FoodItem : Entity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public ItemType Type { get; set; }
         public string Description { get; set; }

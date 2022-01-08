@@ -1,8 +1,9 @@
-﻿namespace Domain.Entities
+﻿using CSharpFunctionalExtensions;
+
+namespace Domain.Entities
 {
-    public class ItemType
+    public class ItemType : Entity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
