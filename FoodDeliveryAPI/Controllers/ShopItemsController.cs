@@ -9,31 +9,42 @@ using UseCases.Core.Images;
 using System.Threading.Tasks;
 using UseCases.ItemTypes;
 using Domain.Entities.ValueObjects;
+using AutoMapper;
 
 namespace FoodDeliveryAPI.Controllers
 {
     public class ShopItemsController : BaseApiController
     {
+        private readonly IMapper _maper;
+
+        public ShopItemsController(IMapper mapper) 
+            : base()
+        {
+            _maper = mapper;
+        }
+
         // GET: api/index
         [HttpGet]
-        public async Task<ActionResult<List<FoodItem>>> GetAll()
+        public async Task<ActionResult<List<FoodItemDTO>>> GetAll()
         {
             var res = await Mediator.Send(new GetAll.Query());
-            return Ok(res);
+            return Ok(_maper.Map<List<FoodItemDTO>>(res));
         }
 
         // GET: api/index/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodItem>> GetItemById(int id)
+        public async Task<ActionResult<FoodItemDTO>> GetItemById(int id)
         {
-            return await Mediator.Send(new GetById.Query { Id = id });
+            var res = await Mediator.Send(new GetById.Query { Id = id });
+            return Ok(_maper.Map<FoodItemDTO>(res));
         }
 
         // GET: api/index/GetRange/{startId}/amount/{amount}
         [HttpGet("GetRange/{startId}/amount/{amount}")]
-        public async Task<ActionResult<List<FoodItem>>> GetItemByRange(int startId, int amount)
+        public async Task<ActionResult<List<FoodItemDTO>>> GetItemByRange(int startId, int amount)
         {
-            return await Mediator.Send(new GetByRange.Query { StartId = startId, Range = amount });
+            var res = await Mediator.Send(new GetByRange.Query { StartId = startId, Range = amount });
+            return Ok(_maper.Map<FoodItemDTO>(res));
         }
 
         // POST: api/index
@@ -41,17 +52,11 @@ namespace FoodDeliveryAPI.Controllers
         //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> AddItem([FromForm] FoodItemDTO item)
         {
-            var result = await Mediator.Send(new AddImage.Command { Image = item.Image });
-            var type = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
-            FoodItem _item = new()
-            {
-                Name = item.Dto.Name,
-                Description = item.Dto.Description,
-                Price = Price.From(item.Dto.Price),
-                Type = type,
-                Image = new Image() { Id = result.Id, Url = result.Url }
-            };
-
+            var imageRes = await Mediator.Send(new AddImage.Command { Image = item.Image });
+            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
+            FoodItem _item = _maper.Map<FoodItem>(item);
+            _item.Image = _maper.Map<Image>(imageRes);
+            _item.Type = typeRes;
             return Ok(await Mediator.Send(new Add.Command { FoodItem = _item }));
         }
 
@@ -67,17 +72,12 @@ namespace FoodDeliveryAPI.Controllers
                 await Mediator.Send(new DeleteImage.Command { Id = shopItem.Image.Id });
                 newImage = await Mediator.Send(new AddImage.Command { Image = item.Image });
             }
-            var type = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
+            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
 
-            FoodItem _item = new()
-            {
-                Id = item.Dto.Id,
-                Name = item.Dto.Name,
-                Image = newImage != null ? new Image() { Id = newImage.Id, Url = newImage.Url } : null,
-                Description = item.Dto.Description,
-                Type = type,
-                Price = Price.From(item.Dto.Price),
-            };
+
+            FoodItem _item = _maper.Map<FoodItem>(item);
+            _item.Image = newImage != null ? _maper.Map<Image>(newImage) : null;
+            _item.Type = typeRes;
 
             return Ok(await Mediator.Send(new Edit.Command { FoodItem = _item }));
         }

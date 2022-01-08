@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Domain.Identity
 {
@@ -11,6 +12,7 @@ namespace Domain.Identity
             public int Id { get; set; }
             public string Name { get; set; }
             public int TypeId { get; set; }
+            public Image Image { get; set; }
         }
 
         public Data Dto { get; set; }
