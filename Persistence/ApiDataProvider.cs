@@ -33,29 +33,29 @@ namespace FoodDelivery.Persistence
             return JsonConvert.DeserializeObject<FoodItem>(json);
         }
 
-        public void AddItem(FoodItemDTO item)
+        public void AddItem(FoodItemDto2 item)
         {
             var c = new MultipartFormDataContent();
 
-            c.Add(new StringContent(item.Dto.Name.ToString(), Encoding.UTF8, "text/plain"), "dto.Name");
-            c.Add(new StringContent(item.Dto.Price.ToString(), Encoding.UTF8, "text/plain"), "dto.Price");
+            c.Add(new StringContent(item.Name.ToString(), Encoding.UTF8, "text/plain"), "dto.Name");
+            c.Add(new StringContent(item.Price.ToString(), Encoding.UTF8, "text/plain"), "dto.Price");
             c.Add(new StreamContent(item.Image.OpenReadStream()), "image", item.Image.FileName);
-            c.Add(new StringContent(item.Dto.Description.ToString(), Encoding.UTF8, "text/plain"), "dto.Description");
+            c.Add(new StringContent(item.Description.ToString(), Encoding.UTF8, "text/plain"), "dto.Description");
             string url = @"https://localhost:44384/api/index";
             var response = httpClient.PostAsync(
                 requestUri: url,
                 content: c).Result;
         }
 
-        public void EditItem(FoodItemDTO item)
+        public void EditItem(FoodItemDto2 item)
         {
             var c = new MultipartFormDataContent();
 
-            c.Add(new StringContent(item.Dto.Id.ToString(), Encoding.UTF8, "text/plain"), "dto.Id");
-            c.Add(new StringContent(item.Dto.Name.ToString(), Encoding.UTF8, "text/plain"), "dto.Name");
-            c.Add(new StringContent(item.Dto.Price.ToString(), Encoding.UTF8, "text/plain"), "dto.Price");
+            c.Add(new StringContent(item.Id.ToString(), Encoding.UTF8, "text/plain"), "dto.Id");
+            c.Add(new StringContent(item.Name.ToString(), Encoding.UTF8, "text/plain"), "dto.Name");
+            c.Add(new StringContent(item.Price.ToString(), Encoding.UTF8, "text/plain"), "dto.Price");
             c.Add(new StreamContent(item.Image.OpenReadStream()), "image", item.Image.FileName);
-            c.Add(new StringContent(item.Dto.Description.ToString(), Encoding.UTF8, "text/plain"), "dto.Description");
+            c.Add(new StringContent(item.Description.ToString(), Encoding.UTF8, "text/plain"), "dto.Description");
 
             string url = @"https://localhost:44384/api/index";
             var response = httpClient.PutAsync(

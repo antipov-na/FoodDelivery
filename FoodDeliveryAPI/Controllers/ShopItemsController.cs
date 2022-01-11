@@ -25,35 +25,35 @@ namespace FoodDeliveryAPI.Controllers
 
         // GET: api/index
         [HttpGet]
-        public async Task<ActionResult<List<FoodItemDTO>>> GetAll()
+        public async Task<ActionResult<List<FoodItemDto1>>> GetAll()
         {
             var res = await Mediator.Send(new GetAll.Query());
-            return Ok(_maper.Map<List<FoodItemDTO>>(res));
+            return Ok(_maper.Map<List<FoodItemDto1>>(res));
         }
 
         // GET: api/index/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodItemDTO>> GetItemById(int id)
+        public async Task<ActionResult<FoodItemDto1>> GetItemById(int id)
         {
             var res = await Mediator.Send(new GetById.Query { Id = id });
-            return Ok(_maper.Map<FoodItemDTO>(res));
+            return Ok(_maper.Map<FoodItemDto1>(res));
         }
 
         // GET: api/index/GetRange/{startId}/amount/{amount}
         [HttpGet("GetRange/{startId}/amount/{amount}")]
-        public async Task<ActionResult<List<FoodItemDTO>>> GetItemByRange(int startId, int amount)
+        public async Task<ActionResult<List<FoodItemDto1>>> GetItemByRange(int startId, int amount)
         {
             var res = await Mediator.Send(new GetByRange.Query { StartId = startId, Range = amount });
-            return Ok(_maper.Map<FoodItemDTO>(res));
+            return Ok(_maper.Map<FoodItemDto1>(res));
         }
 
         // POST: api/index
         [HttpPost]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> AddItem([FromForm] FoodItemDTO item)
+        public async Task<IActionResult> AddItem([FromForm] FoodItemDto2 item)
         {
             var imageRes = await Mediator.Send(new AddImage.Command { Image = item.Image });
-            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
+            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.TypeId });
             FoodItem _item = _maper.Map<FoodItem>(item);
             _item.Image = _maper.Map<Image>(imageRes);
             _item.Type = typeRes;
@@ -63,7 +63,7 @@ namespace FoodDeliveryAPI.Controllers
         // PUT: api/index
         [HttpPut]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> EditItem([FromForm] FoodItemDTO item)
+        public async Task<IActionResult> EditItem([FromForm] FoodItemDto2 item)
         {
             CloudinaryApiResult newImage = null;
             FoodItem _item = _maper.Map<FoodItem>(item);
@@ -73,7 +73,7 @@ namespace FoodDeliveryAPI.Controllers
                 newImage = await Mediator.Send(new AddImage.Command { Image = item.Image });
             }
 
-            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
+            var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.TypeId });
 
             _item.Image = newImage != null ? _maper.Map<Image>(newImage) : null;
             _item.Type = typeRes;

@@ -48,24 +48,7 @@ function createShopItems() {
                 method: 'GET'
             });
             if (response.ok) {
-                let dto = await response.json();
-                let result = [];
-                for (var i in dto) {
-                    result.push({
-                        id: dto[i].dto.id,
-                        name: dto[i].dto.name,
-                        description: dto[i].dto.description,
-                        price: dto[i].dto.price,
-                        type: {
-                            id: dto[i].dto.typeId
-                        },
-                        image: {
-                            id: dto[i].dto.image.id,
-                            url: dto[i].dto.image.url
-                        }
-                    });
-                }
-                set(result);
+                set(await response.json());
             } else {
                 console.log(response);
             }

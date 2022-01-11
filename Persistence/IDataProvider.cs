@@ -6,9 +6,9 @@ namespace FoodDelivery.Persistence
 {
     public interface IDataProvider
     {
-        void AddItem(FoodItemDTO item);
+        void AddItem(FoodItemDto2 item);
         void DeleteItem(int id);
-        void EditItem(FoodItemDTO item);
+        void EditItem(FoodItemDto2 item);
         IEnumerable<FoodItem> GetAll();
         FoodItem GetItemById(int id);
     }
