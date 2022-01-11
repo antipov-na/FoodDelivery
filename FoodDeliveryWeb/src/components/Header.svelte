@@ -1,3 +1,7 @@
+<script>
+    import LoginButton from './LoginButton.svelte';
+</script>
+
 <header>
     <div class="container header">
         <div class="left">
@@ -102,7 +106,7 @@
                 </svg>
                 <span class="dodo-coins-link__label">Додокоины</span>
             </a>
-            <button>Войти</button>
+            <LoginButton />
         </div>
     </div>
 </header>

@@ -15,7 +15,7 @@
     }
 </script>
 
-<button on:click={open}><slot name="trigger" /></button>
+<div on:click={open}><slot name="trigger" /></div>
 
 {#if isOpen}
     <div class="dialog-wrapper" on:keydown={keydown} tabindex={0}>
@@ -73,6 +73,7 @@
     }
 
     .dialog-wrapper {
+        z-index: 999;
         background: rgba(0, 0, 0, 0.8);
         position: fixed;
         top: 0;
