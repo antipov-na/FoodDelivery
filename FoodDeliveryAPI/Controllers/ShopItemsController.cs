@@ -66,16 +66,15 @@ namespace FoodDeliveryAPI.Controllers
         public async Task<IActionResult> EditItem([FromForm] FoodItemDTO item)
         {
             CloudinaryApiResult newImage = null;
+            FoodItem _item = _maper.Map<FoodItem>(item);
             if (item.Image != null)
             {
-                var shopItem = await Mediator.Send(new GetById.Query { Id = item.Dto.Id });
-                await Mediator.Send(new DeleteImage.Command { Id = shopItem.Image.Id });
+                await Mediator.Send(new DeleteImageByShopItemId.Command { ShopItemId = _item.Id });
                 newImage = await Mediator.Send(new AddImage.Command { Image = item.Image });
             }
+
             var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.Dto.TypeId });
 
-
-            FoodItem _item = _maper.Map<FoodItem>(item);
             _item.Image = newImage != null ? _maper.Map<Image>(newImage) : null;
             _item.Type = typeRes;
 
