@@ -33,8 +33,8 @@ namespace UseCases.Authentication
                     return null;
                 }
 
-                string token = _jwtService.CreateToken(user);
-                return new UserDto { Token = token, UserName = user.UserName };
+                JWT token = _jwtService.CreateToken(user);
+                return new UserDto { Token = token.Token, UserName = user.UserName, ValidTo = token.ValidTo };
             }
         }
     }

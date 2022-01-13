@@ -4,6 +4,6 @@ namespace UseCases.Core.Authentication
 {
     public interface IJwtService
     {
-        string CreateToken(ApplicationUser user);
+        JWT CreateToken(ApplicationUser user);
     }
 }

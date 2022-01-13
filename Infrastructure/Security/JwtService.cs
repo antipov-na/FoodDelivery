@@ -18,7 +18,7 @@ namespace Infrastructure.Security
             _configuration = configuration;
         }
 
-        public string CreateToken(ApplicationUser user)
+        public JWT CreateToken(ApplicationUser user)
         {
             var claims = new List<Claim>
             {
@@ -36,7 +36,7 @@ namespace Infrastructure.Security
 
             var handler = new JwtSecurityTokenHandler();
             var token = handler.CreateToken(descriptor);
-            return handler.WriteToken(token);
+            return new JWT() { Token = handler.WriteToken(token), ValidTo =token.ValidTo };
         }
     }
 }

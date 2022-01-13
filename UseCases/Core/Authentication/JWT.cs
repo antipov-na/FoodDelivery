@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UseCases.Core
+namespace UseCases.Core.Authentication
 {
-    public class UserDto
+    public class JWT
     {
-        public string UserName { get; set; }
         public string Token { get; set; }
         public DateTime ValidTo { get; set; }
     }
