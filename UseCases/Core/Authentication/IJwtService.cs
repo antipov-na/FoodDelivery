@@ -1,9 +1,10 @@
 ﻿using Domain.Identity.Authentication;
+using System.Threading.Tasks;
 
 namespace UseCases.Core.Authentication
 {
     public interface IJwtService
     {
-        JWT CreateToken(ApplicationUser user);
+        Task<JWT> CreateToken(ApplicationUser user);
     }
 }

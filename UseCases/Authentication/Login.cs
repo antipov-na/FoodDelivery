@@ -28,12 +28,12 @@ namespace UseCases.Authentication
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await userManager.FindByNameAsync(request.LoginModel.Username);
-                if (user == null)
+                if (user == null || !await userManager.CheckPasswordAsync(user, request.LoginModel.Password))
                 {
                     return null;
                 }
 
-                JWT token = _jwtService.CreateToken(user);
+                JWT token = await _jwtService.CreateToken(user);
                 return new UserDto { Token = token.Token, UserName = user.UserName, ValidTo = token.ValidTo };
             }
         }
