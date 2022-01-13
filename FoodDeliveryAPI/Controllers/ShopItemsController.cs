@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using UseCases.ItemTypes;
 using Domain.Entities.ValueObjects;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using UseCases.Core.Authentication;
 
 namespace FoodDeliveryAPI.Controllers
 {
@@ -25,6 +27,7 @@ namespace FoodDeliveryAPI.Controllers
 
         // GET: api/index
         [HttpGet]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<ActionResult<List<FoodItemDto1>>> GetAll()
         {
             var res = await Mediator.Send(new GetAll.Query());

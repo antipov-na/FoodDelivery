@@ -1,8 +1,10 @@
 <script>
+    import { onMount } from 'svelte';
     import { shopItems } from '../stores/apiDataProvider.js';
     import ItemCard from './ItemCard.svelte';
     import Section from './sections/Section.svelte';
     export let type;
+    onMount(() => shopItems.getItems());
 </script>
 
 <Section name={type.name}>

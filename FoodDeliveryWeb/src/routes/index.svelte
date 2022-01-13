@@ -3,6 +3,8 @@
     import { itemTypes } from '../stores/apiDataProvider.js';
     import ShopCategory from '../components/ShopCategory.svelte';
     import RecomendationsSection from '../components/sections/RecomendationSection.svelte';
+    import { onMount } from 'svelte';
+    onMount(() => itemTypes.getItemTypes());
 </script>
 
 <div class="container">

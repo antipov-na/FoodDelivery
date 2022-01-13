@@ -3,7 +3,7 @@
     function open() {
         isOpen = true;
     }
-    function close() {
+    export function close() {
         isOpen = false;
     }
 

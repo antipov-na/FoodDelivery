@@ -1,5 +1,13 @@
 <script>
+    import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
+    import { eraseCookie, getCookie, setCookie } from '../js/cookies.js';
+    let userName = '';
+    onMount(() => {
+        userName = getCookie('userName');
+    });
+
+    let loginDialog;
     let login = async (e) => {
         let form = new FormData(e.target);
         const respoce = await fetch('https://localhost:44384/api/authentication/login', {
@@ -12,30 +20,51 @@
                 password: form.get('password')
             })
         });
-        console.log(respoce.json());
+        if (respoce.ok) {
+            let json = await respoce.json();
+            setCookie('userName', json.userName, json.validTo);
+            setCookie('token', json.token, json.validTo);
+            userName = json.userName;
+            loginDialog.close();
+        } else {
+            alert('Что-то пошло не так');
+        }
+    };
+    let logout = () => {
+        eraseCookie('userName');
+        eraseCookie('token');
+        userName = '';
     };
 </script>
 
-<Modal>
-    <button slot="trigger" class="btn">Войти</button>
-    <p slot="header">Вход в аккаунт</p>
-    <div slot="content">
-        <form on:submit|preventDefault={login}>
-            <label>
-                E-mail
-                <input type="text" name="username" id="username" />
-            </label>
-            <label>
-                Пароль
-                <input type="password" name="password" id="password" />
-            </label>
-            <button class="btn">Войти</button>
-        </form>
-    </div>
-</Modal>
+{#if userName == '' || userName == null}
+    <Modal bind:this={loginDialog}>
+        <button slot="trigger" class="btn">Войти</button>
+        <p slot="header">Вход в аккаунт</p>
+        <div slot="content">
+            <form on:submit|preventDefault={login}>
+                <label>
+                    E-mail
+                    <input type="text" name="username" id="username" />
+                </label>
+                <label>
+                    Пароль
+                    <input type="password" name="password" id="password" />
+                </label>
+                <button class="btn">Войти</button>
+            </form>
+        </div>
+    </Modal>
+{:else}
+    <span class="user-name">
+        {userName}
+    </span>
+    <button class="btn" on:click={logout}>Выйти</button>
+{/if}
 
 <style>
     .btn {
+        margin: 0;
         padding: 8px 16px;
         font-size: 14px;
         line-height: 16px;
@@ -44,5 +73,9 @@
         border-radius: 20px;
         border: medium none;
         cursor: pointer;
+    }
+
+    .user-name {
+        margin-right: 32px;
     }
 </style>

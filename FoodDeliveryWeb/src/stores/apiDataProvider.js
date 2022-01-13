@@ -1,9 +1,10 @@
 const baseUrl = 'https://localhost:44384/api';
 
 import { writable } from 'svelte/store';
+import { getCookie } from '../js/cookies.js';
 
 export const shopItems = createShopItems();
-shopItems.getItems();
+// shopItems.getItems();
 
 function createShopItems() {
     const { subscribe, set, update } = writable([]);
@@ -13,6 +14,9 @@ function createShopItems() {
         addItem: async (item) => {
             const response = await fetch(baseUrl + '/' + 'shopItems', {
                 method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                },
                 body: item
             });
             if (response.ok) {
@@ -23,7 +27,10 @@ function createShopItems() {
         },
         deleteItem: async (id) => {
             const response = await fetch(baseUrl + '/' + 'shopItems' + '/' + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                }
             });
             if (response.ok) {
                 update((i) => i.filter((item) => item.id !== id));
@@ -34,6 +41,9 @@ function createShopItems() {
         updateItem: async (item) => {
             const response = await fetch(baseUrl + '/' + 'shopItems' + '/' + item.id, {
                 method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                },
                 body: item
             });
             if (response.ok) {
@@ -43,9 +53,11 @@ function createShopItems() {
             }
         },
         getItems: async () => {
-            console.log(baseUrl + '/' + 'shopItems');
             const response = await fetch(baseUrl + '/' + 'shopItems', {
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer${getCookie('token')}`
+                }
             });
             if (response.ok) {
                 set(await response.json());
@@ -57,7 +69,7 @@ function createShopItems() {
 }
 
 export const itemTypes = createItemTypes();
-itemTypes.getItemTypes();
+// itemTypes.getItemTypes();
 
 function createItemTypes() {
     const { subscribe, set, update } = writable([]);
@@ -67,6 +79,9 @@ function createItemTypes() {
         addItemType: async (item) => {
             const response = await fetch(baseUrl + '/' + 'shopItemTypes', {
                 method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                },
                 body: item
             });
             if (response.ok) {
@@ -81,7 +96,10 @@ function createItemTypes() {
         deleteItemType: async (id) => {
             console.log(baseUrl + '/' + id);
             const response = await fetch(baseUrl + '/' + 'shopItemTypes' + '/' + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                }
             });
             if (response.ok) {
                 update((i) => i.filter((item) => item.id !== id));
@@ -92,6 +110,9 @@ function createItemTypes() {
         updateItemType: async (item) => {
             const response = await fetch(baseUrl + '/' + 'shopItemTypes' + '/' + item.id, {
                 method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                },
                 body: item
             });
             if (response.ok) {
@@ -102,7 +123,10 @@ function createItemTypes() {
         },
         getItemTypes: async () => {
             const response = await fetch(baseUrl + '/' + 'shopItemTypes', {
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${getCookie('token')}`
+                }
             });
             if (response.ok) {
                 set(await response.json());
