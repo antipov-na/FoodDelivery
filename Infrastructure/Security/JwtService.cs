@@ -40,7 +40,9 @@ namespace Infrastructure.Security
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddHours(1),
-                SigningCredentials = credentials
+                SigningCredentials = credentials,
+                Issuer = _configuration["JWT:ValidIssuer"],
+                Audience = _configuration["JWT:ValidAudience"]
             };
 
             var handler = new JwtSecurityTokenHandler();
