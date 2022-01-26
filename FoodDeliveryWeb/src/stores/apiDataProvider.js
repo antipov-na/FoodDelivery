@@ -56,7 +56,7 @@ function createShopItems() {
             const response = await fetch(baseUrl + '/' + 'shopItems', {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer${getCookie('token')}`
+                    Authorization: `Bearer ${getCookie('token')}`
                 }
             });
             if (response.ok) {
