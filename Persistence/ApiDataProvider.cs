@@ -33,7 +33,7 @@ namespace FoodDelivery.Persistence
             return JsonConvert.DeserializeObject<FoodItem>(json);
         }
 
-        public void AddItem(FoodItemDto2 item)
+        public void AddItem(CreateFoodItemDto item)
         {
             var c = new MultipartFormDataContent();
 
@@ -47,7 +47,7 @@ namespace FoodDelivery.Persistence
                 content: c).Result;
         }
 
-        public void EditItem(FoodItemDto2 item)
+        public void EditItem(CreateFoodItemDto item)
         {
             var c = new MultipartFormDataContent();
 

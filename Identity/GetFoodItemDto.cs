@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.Entities;
 
 namespace Domain.Identity
 {
-    public class FoodItemDto2
+    public class GetFoodItemDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int TypeId { get; set; }
+        public ItemType Type { get; set; }
         public decimal Price { get; set; }
-        public IFormFile Image { get; set; }
+        public Image Image { get; set; }
     }
 }

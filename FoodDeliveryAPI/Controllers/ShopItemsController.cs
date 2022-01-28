@@ -28,32 +28,32 @@ namespace FoodDeliveryAPI.Controllers
         // GET: api/index
         [HttpGet]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<ActionResult<List<FoodItemDto1>>> GetAll()
+        public async Task<ActionResult<List<GetFoodItemDto>>> GetAll()
         {
             var res = await Mediator.Send(new GetAll.Query());
-            return Ok(_maper.Map<List<FoodItemDto1>>(res));
+            return Ok(_maper.Map<List<GetFoodItemDto>>(res));
         }
 
         // GET: api/index/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodItemDto1>> GetItemById(int id)
+        public async Task<ActionResult<GetFoodItemDto>> GetItemById(int id)
         {
             var res = await Mediator.Send(new GetById.Query { Id = id });
-            return Ok(_maper.Map<FoodItemDto1>(res));
+            return Ok(_maper.Map<GetFoodItemDto>(res));
         }
 
         // GET: api/index/GetRange/{startId}/amount/{amount}
         [HttpGet("GetRange/{startId}/amount/{amount}")]
-        public async Task<ActionResult<List<FoodItemDto1>>> GetItemByRange(int startId, int amount)
+        public async Task<ActionResult<List<GetFoodItemDto>>> GetItemByRange(int startId, int amount)
         {
             var res = await Mediator.Send(new GetByRange.Query { StartId = startId, Range = amount });
-            return Ok(_maper.Map<FoodItemDto1>(res));
+            return Ok(_maper.Map<GetFoodItemDto>(res));
         }
 
         // POST: api/index
         [HttpPost]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> AddItem([FromForm] FoodItemDto2 item)
+        public async Task<IActionResult> AddItem([FromForm] CreateFoodItemDto item)
         {
             var imageRes = await Mediator.Send(new AddImage.Command { Image = item.Image });
             var typeRes = await Mediator.Send(new GetItemTypeById.Query { Id = item.TypeId });
@@ -66,7 +66,7 @@ namespace FoodDeliveryAPI.Controllers
         // PUT: api/index
         [HttpPut]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> EditItem([FromForm] FoodItemDto2 item)
+        public async Task<IActionResult> EditItem([FromForm] CreateFoodItemDto item)
         {
             CloudinaryApiResult newImage = null;
             FoodItem _item = _maper.Map<FoodItem>(item);

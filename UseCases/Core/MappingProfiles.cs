@@ -15,7 +15,7 @@ namespace UseCases.Core
                 .ReverseMap();
             CreateMap<FoodItem, FoodItem>();
 
-            CreateMap<FoodItem, FoodItemDto1>()
+            CreateMap<FoodItem, GetFoodItemDto>()
                 .ForMember(dest =>
                     dest.Price,
                     opt => opt.MapFrom(src => src.Price.Value))
@@ -24,7 +24,7 @@ namespace UseCases.Core
                     dest.Price,
                     opt => opt.MapFrom(src => Price.From(src.Price)));
 
-            CreateMap<FoodItemDto2, FoodItem>()
+            CreateMap<CreateFoodItemDto, FoodItem>()
                 .ForMember(dest =>
                     dest.Type,
                     opt => opt.Ignore())
