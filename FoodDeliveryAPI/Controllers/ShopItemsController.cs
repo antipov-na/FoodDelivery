@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Domain.Entities;
-using Domain.Identity;
 using System.Collections.Generic;
 using UseCases.FoodItems;
 using UseCases.Images;
 using UseCases.Core.Images;
 using System.Threading.Tasks;
 using UseCases.ItemTypes;
-using Domain.Entities.ValueObjects;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using UseCases.Core.Authentication;
+using UseCases.Core.DTOs;
 
 namespace FoodDeliveryAPI.Controllers
 {

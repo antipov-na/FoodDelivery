@@ -1,14 +1,14 @@
-﻿using Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Domain.Identity
+namespace UseCases.Core.DTOs
 {
-    public class GetFoodItemDto
+    public class CreateFoodItemDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ItemType Type { get; set; }
+        public int TypeId { get; set; }
         public decimal Price { get; set; }
-        public Image Image { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

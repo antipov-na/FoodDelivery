@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Domain.Identity;
 using Domain.Entities;
+using UseCases.Core.DTOs;
 
 namespace FoodDelivery.Persistence
 {

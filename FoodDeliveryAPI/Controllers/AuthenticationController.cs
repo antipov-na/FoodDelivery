@@ -1,9 +1,9 @@
-﻿using UseCases.Core.Authentication;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UseCases.Authentication;
-using UseCases.Core;
+using UseCases.Core.Authentication;
+using UseCases.Core.DTOs;
 
 namespace FoodDeliveryAPI.Controllers
 {

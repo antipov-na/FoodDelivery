@@ -2,9 +2,9 @@
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
-using Domain.Identity;
 using Domain.Entities;
 using System.Net.Http.Headers;
+using UseCases.Core.DTOs;
 
 namespace FoodDelivery.Persistence
 {

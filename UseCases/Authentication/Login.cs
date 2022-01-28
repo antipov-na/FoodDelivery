@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Domain.Identity.Authentication;
-using UseCases.Core;
+using UseCases.Core.DTOs;
 
 namespace UseCases.Authentication
 {

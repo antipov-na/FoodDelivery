@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Domain.Entities.ValueObjects;
-using Domain.Identity;
-using System.Collections.Generic;
+using UseCases.Core.DTOs;
 using UseCases.Core.Images;
 
 namespace UseCases.Core
