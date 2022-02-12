@@ -1,7 +1,9 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UseCases.Core.Authentication;
 using UseCases.ItemTypes;
     
 namespace FoodDeliveryAPI.Controllers
@@ -21,19 +23,19 @@ namespace FoodDeliveryAPI.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> AddItemType([FromForm] ItemType itemType)
         {
             return Ok(await Mediator.Send(new AddItemType.Command { ItemType = itemType }));
         }
         [HttpPut]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> EditItemType([FromForm] ItemType itemType)
         {
             return Ok(await Mediator.Send(new EditItemType.Command { ItemType = itemType }));
         }
         [HttpDelete("{id}")]
-        //[Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> DeleteItemType(int id)
         {
             return Ok(await Mediator.Send(new DeleteItemType.Command { Id = id }));
