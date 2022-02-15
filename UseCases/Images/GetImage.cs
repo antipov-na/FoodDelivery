@@ -1,30 +1,34 @@
-﻿using CloudinaryDotNet.Actions;
-using MediatR;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using UseCases.Core;
+using UseCases.Core.DTOs;
 using UseCases.Core.Images;
 
 namespace UseCases.Images
 {
     public class GetImage
     {
-        public class Query : IRequest<GetResourceResult> 
+        public class Query : IRequest<GetImageDto> 
         { 
             public string Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, GetResourceResult>
+        public class Handler : IRequestHandler<Query, GetImageDto>
         {
-            private readonly IImageService _imageService;
+            private readonly IDeliveryContext _context;
 
-            public Handler(IImageService imageService)
+            public Handler( IDeliveryContext context )
             {
-                _imageService = imageService;
+                _context = context;
             }
 
-            public async Task<GetResourceResult> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<GetImageDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _imageService.GetImage(request.Id);
+                var image = await _context.Images.SingleOrDefaultAsync(i => i.Id == request.Id, cancellationToken: cancellationToken);
+
+                return new GetImageDto() { Id = image.Id, Url = image.Url };
             }
         }
     }

@@ -1,30 +1,40 @@
 ﻿using UseCases.Core.Images;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using UseCases.Core;
+using Domain.Entities;
+using UseCases.Core.DTOs;
 
 namespace UseCases.Images
 {
     public class AddImage
     {
-        public class Command : IRequest<CloudinaryApiResult>
+        public class Command : IRequest
         {
-            public IFormFile Image { get; set; }
+            public CreateImageDto ImageDto { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, CloudinaryApiResult>
+        public class Handler : IRequestHandler<Command>
         {
+            private readonly IDeliveryContext _context;
             private readonly IImageService _imageService;
+            private readonly IMapper _mapper;
 
-            public Handler(IImageService imageService)
+            public Handler(IDeliveryContext context, IImageService imageService, IMapper mapper)
             {
+                _context = context;
                 _imageService = imageService;
+                _mapper = mapper;
             }
 
-            public async Task<CloudinaryApiResult> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                return await _imageService.AddImage(request.Image);
+                var image = await _imageService.AddImage(request.ImageDto.Image);
+                _context.Images.Add(_mapper.Map<Image>(image));
+                _ = await _context.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
             }
         }
     }

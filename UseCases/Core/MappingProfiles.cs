@@ -13,7 +13,8 @@ namespace UseCases.Core
             CreateMap<CloudinaryApiResult, Image>()
                 .ReverseMap();
             CreateMap<FoodItem, FoodItem>();
-
+            CreateMap<GetImageDto, Image>()
+                .ReverseMap();
             CreateMap<FoodItem, GetFoodItemDto>()
                 .ForMember(dest =>
                     dest.Price,
