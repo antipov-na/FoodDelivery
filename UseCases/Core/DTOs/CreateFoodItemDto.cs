@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace UseCases.Core.DTOs
 {
@@ -9,6 +10,6 @@ namespace UseCases.Core.DTOs
         public string Description { get; set; }
         public int TypeId { get; set; }
         public decimal Price { get; set; }
-        public IFormFile Image { get; set; }
+        public Image Image { get; set; }
     }
 }

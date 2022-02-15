@@ -10,7 +10,7 @@ namespace UseCases.FoodItems
     {
         public class Command : IRequest
         {
-            public int Id{ get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
