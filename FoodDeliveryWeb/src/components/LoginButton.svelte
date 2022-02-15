@@ -1,13 +1,13 @@
 <script>
     import { onMount } from 'svelte';
-    import Modal from './Modal.svelte';
+    import Modal from '../components/UI/Modal.svelte';
     import { eraseCookie, getCookie, setCookie } from '../js/cookies.js';
     let userName = '';
     onMount(() => {
         userName = getCookie('userName');
     });
 
-    let loginDialog;
+    let showLoginDialog;
     let login = async (e) => {
         let form = new FormData(e.target);
         const respoce = await fetch('https://localhost:44384/api/authentication/login', {
@@ -38,10 +38,10 @@
 </script>
 
 {#if userName == '' || userName == null}
-    <Modal bind:this={loginDialog}>
-        <button slot="trigger" class="btn">Войти</button>
-        <p slot="header">Вход в аккаунт</p>
-        <div slot="content">
+    <button on:click={() => (showLoginDialog = true)} class="btn">Войти</button>
+    <Modal bind:isVisible={showLoginDialog}>
+        <p>Вход в аккаунт</p>
+        <div>
             <form on:submit|preventDefault={login}>
                 <label>
                     E-mail
