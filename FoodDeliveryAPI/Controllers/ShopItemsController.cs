@@ -36,7 +36,7 @@ namespace FoodDeliveryAPI.Controllers
 
         // POST: api/index
         [HttpPost]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> AddItem([FromForm] CreateFoodItemDto item)
         {
             var res = await Mediator.Send(new Add.Command { FoodItem = item });
@@ -45,7 +45,7 @@ namespace FoodDeliveryAPI.Controllers
 
         // PUT: api/index
         [HttpPut]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> EditItem([FromForm] CreateFoodItemDto item)
         {
             var res = await Mediator.Send(new Edit.Command { FoodItem = item });
@@ -54,7 +54,7 @@ namespace FoodDeliveryAPI.Controllers
 
         //DELETE: api/index/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> DeleteItem(int id)
         {
             var res = await Mediator.Send(new Delete.Command { Id = id });

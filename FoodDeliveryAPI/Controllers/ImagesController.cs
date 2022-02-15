@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UseCases.Core.Authentication;
 using UseCases.Core.DTOs;
 using UseCases.Images;
 
@@ -27,7 +25,7 @@ namespace FoodDeliveryAPI.Controllers
 
         // POST: api/index
         [HttpPost]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> AddItem([FromBody] CreateImageDto item)
         {
             var res = await Mediator.Send(new AddImage.Command() { ImageDto = item });
@@ -36,7 +34,7 @@ namespace FoodDeliveryAPI.Controllers
 
         //DELETE: api/index/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = UserRoles.Admin)]
+        //[Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> DeleteItem(string id)
         {
             var res = await Mediator.Send(new DeleteImage.Command() {Id = id });
