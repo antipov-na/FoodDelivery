@@ -9,7 +9,7 @@
     const dispatch = createEventDispatcher();
 
     let submitHandler = () => {
-        dispatch('confirm', { image: image[0] });
+        dispatch('confirm', image[0]);
         showDialog = false;
     };
 

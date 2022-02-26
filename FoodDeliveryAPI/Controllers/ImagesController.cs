@@ -17,16 +17,16 @@ namespace FoodDeliveryAPI.Controllers
 
         // GET: api/index/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetImageDto>> GetImageById(int id)
+        public async Task<ActionResult<GetImageDto>> GetImageById(string id)
         {
-            var res = await Mediator.Send(new GetImage.Query());
+            var res = await Mediator.Send(new GetImage.Query() { Id = id });
             return Ok(res);
         }
 
         // POST: api/index
         [HttpPost]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> AddItem([FromBody] CreateImageDto item)
+        public async Task<IActionResult> AddItem([FromForm] CreateImageDto item)
         {
             var res = await Mediator.Send(new AddImage.Command() { ImageDto = item });
             return Ok(res);

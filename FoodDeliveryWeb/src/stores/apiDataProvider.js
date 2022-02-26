@@ -141,25 +141,23 @@ function createImages() {
     return {
         subscribe,
         add: async (item) => {
-            const response = await fetch(baseUrl + '/' + 'images', {
+            let data = new FormData();
+            data.append('image', item);
+            const response = await fetch(`${baseUrl}/images`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer `,
-                    'Content-Type': 'application/json'
+                    Authorization: `Bearer `
                 },
-                body: item
+                body: data
             });
             if (response.ok) {
-                const response = await fetch(baseUrl, {
-                    method: 'GET'
-                });
-                set(await response.json());
+                images.get();
             } else {
                 console.log(response);
             }
         },
         delete: async (id) => {
-            const response = await fetch(baseUrl + '/' + 'images' + '/' + id, {
+            const response = await fetch(`${baseUrl}/images/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer `
@@ -172,7 +170,7 @@ function createImages() {
             }
         },
         get: async () => {
-            const response = await fetch(baseUrl + '/' + 'images', {
+            const response = await fetch(`${baseUrl}/images`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer `
