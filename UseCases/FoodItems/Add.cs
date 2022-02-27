@@ -34,7 +34,7 @@ namespace UseCases.FoodItems
             {
                 FoodItem item = _mapper.Map<FoodItem>(request.FoodItem);
 
-                item.Image = await _context.Images.SingleOrDefaultAsync(i => i.Id == request.FoodItem.Image.Id, cancellationToken: cancellationToken);
+                item.Image = await _context.Images.SingleOrDefaultAsync(i => i.Id == request.FoodItem.ImageId, cancellationToken: cancellationToken);
                 item.Type = await _context.ItemTypes.SingleOrDefaultAsync(i => i.Id == request.FoodItem.TypeId, cancellationToken: cancellationToken);
 
                 _context.FoodItems.Add(item);

@@ -10,6 +10,6 @@ namespace UseCases.Core.DTOs
         public string Description { get; set; }
         public int TypeId { get; set; }
         public decimal Price { get; set; }
-        public Image Image { get; set; }
+        public string ImageId { get; set; }
     }
 }

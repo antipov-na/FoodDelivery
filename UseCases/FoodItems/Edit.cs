@@ -8,6 +8,8 @@ using UseCases.Core.DTOs;
 using UseCases.Core.Images;
 using System.Linq;
 using System;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities.ValueObjects;
 
 namespace UseCases.FoodItems
 {
@@ -32,7 +34,7 @@ namespace UseCases.FoodItems
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //check if image exist
-                Image image = _context.Images.SingleOrDefault(img => img.Id == request.FoodItem.Image.Id);
+                Image image = _context.Images.SingleOrDefault(img => img.Id == request.FoodItem.ImageId);
                 if (image == null)
                 {
                     throw new Exception("Изображение с таким id не существует. Сначала добавьте его.");
@@ -45,14 +47,13 @@ namespace UseCases.FoodItems
                     throw new Exception("Тип с таким id не существует. Сначала добавьте его.");
                 }
 
-                FoodItem tempItem = _mapper.Map<FoodItem>(request.FoodItem);
-                FoodItem i = _context.FoodItems.Find(tempItem);
+                FoodItem i = await _context.FoodItems.SingleOrDefaultAsync(i => i.Id == request.FoodItem.Id, cancellationToken: cancellationToken);
 
                 i.Name = request.FoodItem.Name;
                 i.Description = request.FoodItem.Description;
                 i.Type = itemType;
-                i.Image = request.FoodItem.Image;
-                i.Price = tempItem.Price;
+                i.Image = await _context.Images.SingleOrDefaultAsync(i => i.Id == request.FoodItem.ImageId, cancellationToken: cancellationToken);
+                i.Price = Price.From(request.FoodItem.Price);
 
                 _ = await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
