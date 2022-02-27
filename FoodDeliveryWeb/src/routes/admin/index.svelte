@@ -21,7 +21,7 @@
     import RadioSliderButton from '../../components/UI/RadioSlider/RadioSliderButton.svelte';
 
     let promice1 = shopItems.getItems();
-    let promice2 = itemTypes.getItemTypes();
+    let promice2 = itemTypes.get();
     let promice3 = images.get();
 
     let selectedShopItem;
@@ -54,15 +54,15 @@
     };
 
     let editItemTypeDialogSubmitHandler = (event) => {
-        // itemTypes.updateItem(event.detail);
+        itemTypes.update(event.detail);
     };
 
     let deleteItemTypeDialogSubmitHandler = (event) => {
-        // itemTypes.deleteItem(event.detail.id);
+        itemTypes.delete(event.detail.id);
     };
 
     let addItemTypeDialogSubmitHandler = (event) => {
-        // itemTypes.addItem(event.detail);
+        itemTypes.add(event.detail);
     };
 
     let addImageDialogSubmitHandler = (event) => {

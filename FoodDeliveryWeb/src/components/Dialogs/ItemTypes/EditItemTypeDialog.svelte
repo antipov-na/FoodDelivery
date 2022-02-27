@@ -22,7 +22,7 @@
     <div>
         <span> Id:<br /> {itemType.id}</span>
         <label for="itemName"> Название </label>
-        <input type="text" name="name" id="itemName" value={itemType.name} />
+        <input type="text" name="name" id="itemName" bind:value={itemType.name} />
     </div>
 
     <Button class="primary medium" on:click={submitHandler}>Изменить</Button>

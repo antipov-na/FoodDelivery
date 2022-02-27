@@ -73,25 +73,24 @@ function createItemTypes() {
 
     return {
         subscribe,
-        addItemType: async (item) => {
-            const response = await fetch(baseUrl + '/' + 'shopItemTypes', {
+        add: async (item) => {
+            let data = new FormData();
+            data.append('name', item.name);
+            const response = await fetch(`${baseUrl}/shopItemTypes`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer `
                 },
-                body: item
+                body: data
             });
             if (response.ok) {
-                const response = await fetch(baseUrl, {
-                    method: 'GET'
-                });
-                set(await response.json());
+                itemTypes.get();
             } else {
                 console.log(response);
             }
         },
-        deleteItemType: async (id) => {
-            const response = await fetch(baseUrl + '/' + 'shopItemTypes' + '/' + id, {
+        delete: async (id) => {
+            const response = await fetch(`${baseUrl}/shopItemTypes/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer `
@@ -103,22 +102,25 @@ function createItemTypes() {
                 console.log(response);
             }
         },
-        updateItemType: async (item) => {
-            const response = await fetch(baseUrl + '/' + 'shopItemTypes' + '/' + item.id, {
+        update: async (item) => {
+            let data = new FormData();
+            data.append('id', item.id);
+            data.append('name', item.name);
+            const response = await fetch(`${baseUrl}/shopItemTypes`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer `
                 },
-                body: item
+                body: data
             });
             if (response.ok) {
-                this.getItemTypes();
+                itemTypes.get();
             } else {
                 console.log(response);
             }
         },
-        getItemTypes: async () => {
-            const response = await fetch(baseUrl + '/' + 'shopItemTypes', {
+        get: async () => {
+            const response = await fetch(`${baseUrl}/shopItemTypes`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer `
