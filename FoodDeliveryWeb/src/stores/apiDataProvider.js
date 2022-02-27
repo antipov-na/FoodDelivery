@@ -9,22 +9,28 @@ function createShopItems() {
 
     return {
         subscribe,
-        addItem: async (item) => {
-            const response = await fetch(baseUrl + '/' + 'shopItems', {
+        add: async (item) => {
+            let data = new FormData();
+            data.append('name', item.name);
+            data.append('description', item.description);
+            data.append('typeId', item.type);
+            data.append('price', item.price);
+            data.append('imageId', item.image);
+            const response = await fetch(`${baseUrl}/shopItems`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer `
                 },
-                body: item
+                body: data
             });
             if (response.ok) {
-                this.getItems();
+                shopItems.get();
             } else {
                 console.log(response);
             }
         },
-        deleteItem: async (id) => {
-            const response = await fetch(baseUrl + '/' + 'shopItems' + '/' + id, {
+        delete: async (id) => {
+            const response = await fetch(`${baseUrl}/shopItems/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer `
@@ -36,22 +42,30 @@ function createShopItems() {
                 console.log(response);
             }
         },
-        updateItem: async (item) => {
-            const response = await fetch(baseUrl + '/' + 'shopItems' + '/' + item.id, {
+        update: async (item) => {
+            let data = new FormData();
+            data.append('id', item.id);
+            data.append('name', item.name);
+            data.append('description', item.description);
+            data.append('typeId', item.type.id);
+            data.append('price', item.price);
+            data.append('imageId', item.image.id);
+
+            const response = await fetch(`${baseUrl}/shopItems/`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer `
                 },
-                body: item
+                body: data
             });
             if (response.ok) {
-                this.getItems();
+                shopItems.get();
             } else {
                 console.log(response);
             }
         },
-        getItems: async () => {
-            const response = await fetch(baseUrl + '/' + 'shopItems', {
+        get: async () => {
+            const response = await fetch(`${baseUrl}/shopItems`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer `

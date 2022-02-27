@@ -24,19 +24,19 @@
     <div>
         <span> Id:<br /> {shopItem.id}</span>
         <label for="itemName"> Название </label>
-        <input type="text" name="name" id="itemName" value={shopItem.name} />
+        <input type="text" name="name" id="itemName" bind:value={shopItem.name} />
         <label for="itemDescription">Описание</label>
-        <textarea name="deescription" id="itemDescription" cols="30" rows="10" value={shopItem.description} />
+        <textarea name="deescription" id="itemDescription" cols="30" rows="10" bind:value={shopItem.description} />
         <label for="itemPrice">Цена</label>
-        <input type="number" name="price" id="itemPrice" value={shopItem.price} min="1" step="0.01" />
+        <input type="number" name="price" id="itemPrice" bind:value={shopItem.price} min="1" step="0.01" />
         <label for="itemType">Тип</label>
-        <select name="type" id="itemType">
+        <select name="type" id="itemType" bind:value={shopItem.type.id}>
             {#each itemTypes as type}
                 <option value={type.id}>{type.name}</option>
             {/each}
         </select>
         <label for="itemImage">Изображение</label>
-        <select name="image" id="itemImage">
+        <select name="image" id="itemImage" bind:value={shopItem.image.id}>
             {#each images as img}
                 <option value={img.id}>{img.url}</option>
             {/each}
