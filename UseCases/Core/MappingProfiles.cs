@@ -34,6 +34,13 @@ namespace UseCases.Core
                  .ForMember(dest =>
                     dest.Image,
                     opt => opt.Ignore());
+
+            CreateMap<EditItemTypeDto, ItemType>()
+                .ReverseMap();
+            CreateMap<GetItemTypeDto, ItemType>()
+               .ReverseMap();
+            CreateMap<CreateItemTypeDto, ItemType>()
+                .ReverseMap();
         }
     }
 }

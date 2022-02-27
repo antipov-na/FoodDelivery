@@ -1,8 +1,10 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.Core;
+using UseCases.Core.DTOs;
 
 namespace UseCases.ItemTypes
 {
@@ -10,20 +12,24 @@ namespace UseCases.ItemTypes
     {
         public class Command : IRequest
         {
-            public ItemType ItemType { get; set; }
+            public CreateItemTypeDto ItemTypeDto { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDeliveryContext _context;
-            public Handler(IDeliveryContext context)
+            private readonly IMapper _mapper;
+
+            public Handler(IDeliveryContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                _context.ItemTypes.Add(request.ItemType);
+                var item = _mapper.Map<ItemType>(request.ItemTypeDto);
+                _context.ItemTypes.Add(item);
                 _ = await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

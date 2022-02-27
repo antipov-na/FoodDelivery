@@ -1,12 +1,9 @@
 ﻿using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.Core;
+using UseCases.Core.DTOs;
 
 namespace UseCases.ItemTypes
 {
@@ -14,7 +11,7 @@ namespace UseCases.ItemTypes
     {
         public class Command : IRequest
         {
-            public ItemType ItemType { get; set; }
+            public EditItemTypeDto ItemTypeDto { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -27,8 +24,8 @@ namespace UseCases.ItemTypes
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                ItemType i = _context.ItemTypes.Find(request.ItemType.Id);
-                i.Name = request.ItemType.Name;
+                ItemType i = _context.ItemTypes.Find(request.ItemTypeDto.Id);
+                i.Name = request.ItemTypeDto.Name;
                 _ = await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
