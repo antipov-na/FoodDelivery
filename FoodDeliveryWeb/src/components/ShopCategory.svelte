@@ -1,21 +1,20 @@
 <script>
-    import { onMount } from 'svelte';
     import { shopItems } from '../stores/apiDataProvider.js';
     import ItemCard from './ItemCard.svelte';
     import Section from './sections/Section.svelte';
     export let type;
-    onMount(() => shopItems.getItems());
+    let promice = shopItems.get();
 </script>
 
 <Section name={type.name}>
     <div class="items-container">
-        {#each $shopItems as item}
-            {#if item.type.id === type.id}
-                <ItemCard fooditem={item} />
-            {/if}
-        {:else}
-            <p>loading...</p>
-        {/each}
+        {#await promice then _}
+            {#each $shopItems as item}
+                {#if item.type.id === type.id}
+                    <ItemCard fooditem={item} />
+                {/if}
+            {/each}
+        {/await}
     </div>
 </Section>
 
