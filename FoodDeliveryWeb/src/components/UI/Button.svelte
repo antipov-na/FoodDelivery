@@ -11,7 +11,6 @@
 
 <style>
     button {
-        box-sizing: border-box;
         margin: 0;
 
         outline-offset: -2px;
@@ -35,6 +34,7 @@
 
     .small {
         padding: 8px 16px;
+        height: 32px;
         font-size: 14px;
         line-height: 16px;
     }
