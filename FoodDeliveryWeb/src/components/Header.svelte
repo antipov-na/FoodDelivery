@@ -128,6 +128,8 @@
     }
     .right {
         display: flex;
+        gap: 32px;
+        align-items: center;
     }
 
     .dodo-coins-link {
@@ -135,7 +137,6 @@
         flex-direction: column;
         align-items: center;
         color: #000;
-        margin-right: 32px;
     }
     .dodo-coins-link:hover .icon {
         fill: orange;
