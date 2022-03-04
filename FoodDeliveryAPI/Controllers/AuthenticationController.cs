@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UseCases.Authentication;
 using UseCases.Core.Authentication;
-using UseCases.Core.DTOs;
 
 namespace FoodDeliveryAPI.Controllers
 {
@@ -13,8 +13,17 @@ namespace FoodDeliveryAPI.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            UserDto res = await Mediator.Send(new Login.Query { LoginModel = model });
-            return res == null ? Unauthorized() : Ok(res);
+            var res = await Mediator.Send(new Login.Query { LoginModel = model });
+            Response.Cookies.Append("jwt", res.Token, new CookieOptions() { HttpOnly = true, Expires = res.ValidTo });
+            return res == null ? Unauthorized() : Ok();
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return Ok();
         }
 
         [HttpPost]
@@ -31,6 +40,15 @@ namespace FoodDeliveryAPI.Controllers
         {
             RegisterResponse res = await Mediator.Send(new RegisterAdmin.Command { RegisterModel = model });
             return res.Status == "Error" ? StatusCode(StatusCodes.Status500InternalServerError, res) : Ok(res);
+        }
+
+        [HttpGet]
+        [Route("user")]
+        [Authorize]
+        public async Task<IActionResult> User()
+        {
+            var res = await Mediator.Send(new GetUser.Query { Token = Request.Cookies["jwt"] });
+            return Ok(res);
         }
     }
 }

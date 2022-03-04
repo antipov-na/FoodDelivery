@@ -18,6 +18,11 @@ using System.Text;
 using Domain.Identity.Authentication;
 using FoodDeliveryAPI.Middleware;
 using Infrastructure.Security;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.CookiePolicy;
+using System.Diagnostics;
 
 namespace FoodDeliveryAPI
 {
@@ -33,8 +38,10 @@ namespace FoodDeliveryAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o=> o.AddPolicy("MyPolicy", builder => {
-                builder.AllowAnyOrigin()
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                    .AllowCredentials()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
@@ -90,6 +97,22 @@ namespace FoodDeliveryAPI
             app.UseCustomExceptionHandler();
 
             app.UseRouting();
+
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = HttpOnlyPolicy.Always
+            });
+
+            app.Use(async (context, next) =>
+            {
+                var token = context.Request.Cookies["jwt"];
+                Debug.Write(token);
+                if (!string.IsNullOrEmpty(token))
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+
+                await next();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
