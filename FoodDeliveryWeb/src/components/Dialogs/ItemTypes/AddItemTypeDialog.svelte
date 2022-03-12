@@ -1,18 +1,16 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
 
-    export let showDialog;
+    export let showDialog: boolean;
 
-    let itemType = {
-        name: ''
-    };
+    let itemTypeName: string = '';
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{ confirm: string }>();
 
     let submitHandler = () => {
-        dispatch('confirm', itemType);
+        dispatch('confirm', itemTypeName);
         showDialog = false;
     };
 
@@ -24,7 +22,7 @@
 <Modal bind:isVisible={showDialog}>
     <div>
         <label for="itemName"> Название </label>
-        <input type="text" name="name" id="itemName" bind:value={itemType.name} />
+        <input type="text" name="name" id="itemName" bind:value={itemTypeName} />
     </div>
     <Button class="primary medium" on:click={submitHandler}>Добавить</Button>
     <Button class="secondary medium" on:click={cancelHandler}>Отмена</Button>

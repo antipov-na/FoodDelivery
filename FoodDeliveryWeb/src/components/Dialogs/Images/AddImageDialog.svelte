@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
 
-    export let showDialog;
-    let image;
+    export let showDialog: boolean;
+    let image: FileList;
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{ confirm: File }>();
 
     let submitHandler = () => {
         dispatch('confirm', image[0]);

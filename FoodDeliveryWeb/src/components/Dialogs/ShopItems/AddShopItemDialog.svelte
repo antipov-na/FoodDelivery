@@ -1,23 +1,24 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
+    import type { Image, ItemType, CreateShopItemDto } from '../../../types';
 
-    export let showDialog;
-    export let itemTypes;
-    export let images;
-    let shopItem = {
+    export let showDialog: boolean;
+    export let itemTypes: ItemType[];
+    export let images: Image[];
+    let shopItemDto: CreateShopItemDto = {
         name: '',
         description: '',
-        type: 0,
+        image: '',
         price: 0,
-        image: ''
+        type: 0
     };
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{ confirm: CreateShopItemDto }>();
 
     let submitHandler = () => {
-        dispatch('confirm', shopItem);
+        dispatch('confirm', shopItemDto);
         showDialog = false;
     };
 
@@ -29,19 +30,19 @@
 <Modal bind:isVisible={showDialog}>
     <div>
         <label for="itemName"> Название </label>
-        <input type="text" name="name" id="itemName" bind:value={shopItem.name} />
+        <input type="text" name="name" id="itemName" bind:value={shopItemDto.name} />
         <label for="itemDescription">Описание</label>
-        <textarea name="deescription" id="itemDescription" cols="30" rows="10" bind:value={shopItem.description} />
+        <textarea name="deescription" id="itemDescription" cols="30" rows="10" bind:value={shopItemDto.description} />
         <label for="itemPrice">Цена</label>
-        <input type="number" name="price" id="itemPrice" bind:value={shopItem.price} min="1" step="0.01" />
+        <input type="number" name="price" id="itemPrice" bind:value={shopItemDto.price} min="1" step="0.01" />
         <label for="itemType">Тип</label>
-        <select bind:value={shopItem.type} name="type" id="itemType">
+        <select bind:value={shopItemDto.type} name="type" id="itemType">
             {#each itemTypes as type}
                 <option value={type.id}>{type.name}</option>
             {/each}
         </select>
         <label for="itemImage">Изображение</label>
-        <select bind:value={shopItem.image} name="image" id="itemImage">
+        <select bind:value={shopItemDto.image} name="image" id="itemImage">
             {#each images as img}
                 <option value={img.id}>{img.url}</option>
             {/each}

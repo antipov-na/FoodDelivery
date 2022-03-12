@@ -1,17 +1,29 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
+    import type { EditShopItemDto, Image, ItemType, ShopItem } from '../../../types';
 
-    export let showDialog;
-    export let shopItem;
-    export let itemTypes;
-    export let images;
-
-    const dispatch = createEventDispatcher();
+    export let showDialog: boolean;
+    export let shopItem: ShopItem;
+    export let itemTypes: ItemType[];
+    export let images: Image[];
+    // $: _shopItem = JSON.parse(JSON.stringify(shopItem));
+    // $: {
+    //     console.log(shopItem);
+    // }
+    const dispatch = createEventDispatcher<{ confirm: EditShopItemDto }>();
 
     let submitHandler = () => {
-        dispatch('confirm', shopItem);
+        let shopItemDto: EditShopItemDto = {
+            id: shopItem.id,
+            name: shopItem.name,
+            description: shopItem.description,
+            type: shopItem.type.id,
+            price: shopItem.price,
+            image: shopItem.image.id
+        };
+        dispatch('confirm', shopItemDto);
         showDialog = false;
     };
 

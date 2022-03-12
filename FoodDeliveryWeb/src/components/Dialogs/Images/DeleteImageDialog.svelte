@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
+    import type { Image } from '../../../types';
 
-    export let image;
-    export let showDialog;
+    export let image: Image;
+    export let showDialog: boolean;
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{ confirm: string }>();
 
     let submitHandler = () => {
-        dispatch('confirm', image);
+        dispatch('confirm', image.id);
         showDialog = false;
     };
 

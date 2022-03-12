@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
     import Modal from '../../UI/Modal.svelte';
     import Button from '../../UI/Button.svelte';
     import { createEventDispatcher } from 'svelte';
+    import type { ShopItem } from '../../../types';
 
-    export let shopItem;
-    export let showDialog;
+    export let shopItem: ShopItem;
+    export let showDialog: boolean;
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{ confirm: number }>();
 
     let submitHandler = () => {
-        dispatch('confirm', shopItem);
+        dispatch('confirm', shopItem.id);
         showDialog = false;
     };
 

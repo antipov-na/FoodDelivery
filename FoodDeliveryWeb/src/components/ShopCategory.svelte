@@ -1,20 +1,17 @@
 <script>
-    import { shopItems } from '../stores/apiDataProvider.js';
     import ItemCard from './ItemCard.svelte';
     import Section from './sections/Section.svelte';
     export let type;
-    let promice = shopItems.get();
+    export let shopItems;
 </script>
 
 <Section name={type.name}>
     <div class="items-container">
-        {#await promice then _}
-            {#each $shopItems as item}
-                {#if item.type.id === type.id}
-                    <ItemCard fooditem={item} />
-                {/if}
-            {/each}
-        {/await}
+        {#each shopItems as item}
+            {#if item.type.id === type.id}
+                <ItemCard fooditem={item} />
+            {/if}
+        {/each}
     </div>
 </Section>
 
