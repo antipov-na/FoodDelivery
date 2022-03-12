@@ -12,25 +12,23 @@ namespace UseCases.FoodItems
 {
     public class Add
     {
-        public class Command : IRequest
+        public class Command : IRequest<GetFoodItemDto>
         {
             public CreateFoodItemDto FoodItem { get; set; } 
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, GetFoodItemDto>
         {
             private readonly IDeliveryContext _context;
-            private readonly IImageService _imageService;
             private readonly IMapper _mapper;
 
-            public Handler(IDeliveryContext context, IImageService imageService, IMapper mapper)
+            public Handler(IDeliveryContext context, IMapper mapper)
             {
                 _context = context;
-                _imageService = imageService;
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<GetFoodItemDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 FoodItem item = _mapper.Map<FoodItem>(request.FoodItem);
 
@@ -39,7 +37,7 @@ namespace UseCases.FoodItems
 
                 _context.FoodItems.Add(item);
                 _ = await _context.SaveChangesAsync(cancellationToken);
-                return Unit.Value;
+                return _mapper.Map<GetFoodItemDto>(item);
             }
         }
     }

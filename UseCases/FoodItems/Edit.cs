@@ -15,12 +15,12 @@ namespace UseCases.FoodItems
 {
     public class Edit
     {
-        public class Command : IRequest
+        public class Command : IRequest<GetFoodItemDto>
         {
             public CreateFoodItemDto FoodItem { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, GetFoodItemDto>
         {
             private readonly IDeliveryContext _context;
             private readonly IMapper _mapper;
@@ -31,7 +31,7 @@ namespace UseCases.FoodItems
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<GetFoodItemDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 //check if image exist
                 Image image = _context.Images.SingleOrDefault(img => img.Id == request.FoodItem.ImageId);
@@ -56,7 +56,7 @@ namespace UseCases.FoodItems
                 i.Price = Price.From(request.FoodItem.Price);
 
                 _ = await _context.SaveChangesAsync(cancellationToken);
-                return Unit.Value;
+                return _mapper.Map<GetFoodItemDto>(i);
             }
         }
     }

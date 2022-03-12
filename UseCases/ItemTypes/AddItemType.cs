@@ -10,12 +10,12 @@ namespace UseCases.ItemTypes
 {
     public class AddItemType
     {
-        public class Command : IRequest
+        public class Command : IRequest<GetItemTypeDto>
         {
             public CreateItemTypeDto ItemTypeDto { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, GetItemTypeDto>
         {
             private readonly IDeliveryContext _context;
             private readonly IMapper _mapper;
@@ -26,12 +26,12 @@ namespace UseCases.ItemTypes
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<GetItemTypeDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 var item = _mapper.Map<ItemType>(request.ItemTypeDto);
                 _context.ItemTypes.Add(item);
                 _ = await _context.SaveChangesAsync(cancellationToken);
-                return Unit.Value;
+                return _mapper.Map<GetItemTypeDto>(item);
             }
         }
     }

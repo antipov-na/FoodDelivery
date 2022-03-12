@@ -12,6 +12,8 @@ namespace UseCases.Core
         {
             CreateMap<CloudinaryApiResult, Image>()
                 .ReverseMap();
+            CreateMap<CloudinaryApiResult, GetImageDto>()
+                .ReverseMap();
             CreateMap<FoodItem, FoodItem>();
             CreateMap<GetImageDto, Image>()
                 .ReverseMap();

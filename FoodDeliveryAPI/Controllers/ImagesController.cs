@@ -26,7 +26,7 @@ namespace FoodDeliveryAPI.Controllers
         // POST: api/index
         [HttpPost]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> AddItem([FromForm] CreateImageDto item)
+        public async Task<ActionResult<GetImageDto>> AddItem([FromForm] CreateImageDto item)
         {
             var res = await Mediator.Send(new AddImage.Command() { ImageDto = item });
             return Ok(res);

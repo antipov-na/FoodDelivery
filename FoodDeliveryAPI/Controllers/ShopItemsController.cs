@@ -37,7 +37,7 @@ namespace FoodDeliveryAPI.Controllers
         // POST: api/index
         [HttpPost]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> AddItem([FromForm] CreateFoodItemDto item)
+        public async Task<ActionResult<GetFoodItemDto>> AddItem([FromForm] CreateFoodItemDto item)
         {
             var res = await Mediator.Send(new Add.Command { FoodItem = item });
             return Ok(res);
@@ -46,7 +46,7 @@ namespace FoodDeliveryAPI.Controllers
         // PUT: api/index
         [HttpPut]
         //[Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> EditItem([FromForm] CreateFoodItemDto item)
+        public async Task<ActionResult<GetFoodItemDto>> EditItem([FromForm] CreateFoodItemDto item)
         {
             var res = await Mediator.Send(new Edit.Command { FoodItem = item });
             return Ok(res);
